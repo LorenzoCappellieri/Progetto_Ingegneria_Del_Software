@@ -26,3 +26,4 @@ public void setcitta(String citta){this.citta = citta;}
 public void setcod_postale(int cod_postale){this.cod_postale = cod_postale;}
     
 }
+//Voglio eliminare tutto.

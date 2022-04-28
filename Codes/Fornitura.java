@@ -29,7 +29,7 @@ public class Fornitura {
         this.id = id;
     }
 
-    public void setTariffa(double tariffaa) {
+    public void setTariffa(double tariffa) {
         this.tariffa = tariffa;
     }
 

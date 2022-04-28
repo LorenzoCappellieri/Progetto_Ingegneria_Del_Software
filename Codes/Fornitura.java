@@ -1,5 +1,5 @@
 
-//pippo
+
 public class Fornitura {
     private String id;
     public enum TipoFornitura  {ENERGIA_ELETTRICA, GAS, ACQUA };

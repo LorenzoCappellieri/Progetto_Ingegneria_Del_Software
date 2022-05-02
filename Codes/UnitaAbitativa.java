@@ -8,4 +8,4 @@ public UnitaAbitativa(Indirizzo indirizzo){
 public Indirizzo getindirizzo(){return indirizzo;}
 public void setindirizzo(Indirizzo indirizzo){this.indirizzo = indirizzo;}
 }
-//popo
+

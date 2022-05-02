@@ -64,5 +64,3 @@ public class Fornitura {
         return this.unitaFornitura;
     }
 }
-//cazsss
-//ddss

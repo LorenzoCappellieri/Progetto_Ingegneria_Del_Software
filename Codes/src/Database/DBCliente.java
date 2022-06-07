@@ -1,7 +1,9 @@
 package Database;
 
+import java.net.NetworkInterface;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -11,11 +13,13 @@ public class DBCliente {
 	private String cognome;
 	private String cf;
 	private int codcliente;
+	private ArrayList<DBUnita_abitativa> proprieta;
 	
 	public DBCliente(String cf, int codcliente) {
 		
 		this.cf = cf;
 		this.codcliente = codcliente;
+		this.proprieta = new ArrayList<DBUnita_abitativa>();
 		caricaDaDB();
 	}
 	
@@ -29,14 +33,30 @@ public class DBCliente {
 				this.setCognome(rs.getString("cognome"));
 				this.setCf(rs.getString("cf"));
 				this.setCodcliente(rs.getInt("codcliente"));
+
 			}
 		} catch (ClassNotFoundException | SQLException ex) {
            
             Logger.getLogger("com.mysql.cj.jdbc.Driver").log(Level.SEVERE, null, ex);
 		}
 	}
-	
-	
+
+public void caricaUnita_abitativaDaDB() {
+	String query = "Select * From indirizzo where cf= '"+this.cf+"';";
+	try{
+		ResultSet rs = DBConnectionManager.selectQuery(query);
+		while(rs.next()){
+			DBUnita_abitativa Ua = new DBUnita_abitativa();
+			Ua.setvia(rs.getString("via"));
+			Ua.setncivico(rs.getString("ncivico"));
+			Ua.setnint(rs.getString("nint"));
+			Ua.setcitta(rs.getString("citta"));
+			Ua.setcap(rs.getString("cap"));
+		}
+	}
+}
+
+
 	public void Registrazione() {
 		int x = 0 ;
 		try {

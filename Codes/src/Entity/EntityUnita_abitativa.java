@@ -13,13 +13,16 @@ public class EntityUnita_abitativa {
     private String nint;
     private String citta;
     private String cap;
+    private String cf;
 
-    public EntityUnita_abitativa (String via,String ncivico, String nint,String citta,String cap){
+    public EntityUnita_abitativa (String via,String ncivico, String nint,String cap){
+        DBUnita_abitativa indirizzo = new DBUnita_abitativa(via,ncivico,nint,cap);
+
         this.via = via ;
         this.ncivico = ncivico;
         this.nint = nint;
-        this.citta = citta;
         this.cap = cap;
+        
     }
 
     public EntityUnita_abitativa (DBUnita_abitativa indirizzo){
@@ -28,6 +31,7 @@ public class EntityUnita_abitativa {
         this.nint = indirizzo.getnint();
         this.citta = indirizzo.getcitta();
         this.cap = indirizzo.getcap();
+        this.cf = indirizzo.getcf();
     }
 
 
@@ -75,6 +79,13 @@ public class EntityUnita_abitativa {
         this.cap = cap;
       }
     
+      public String getcf() {
+        return cf;
+      }
+    
+      public void setcf(String cf) {
+        this.cf = cf;
+      }
       @Override
       public String toString() {
         return "EntityIndirizzo [via=" + via + ", ncivico=" + ncivico  + ", nint=" + nint + ", citta =" + citta + ",cap=" +cap+"]";

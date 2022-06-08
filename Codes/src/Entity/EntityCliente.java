@@ -1,5 +1,8 @@
 package Entity;
 
+import java.sql.ClientInfoStatus;
+import java.util.ArrayList;
+
 import Database.DBCliente;
 
 public class EntityCliente {
@@ -7,6 +10,7 @@ public class EntityCliente {
 	private String cognome;
 	private String cf;     //PK
 	private int codcliente;   //PK
+	private ArrayList<EntityUnita_abitativa> proprieta;
 	
 	public EntityCliente(String cf, int codcliente) {
 		
@@ -16,7 +20,9 @@ public class EntityCliente {
 		this.cognome = cliente.getCognome();
 		this.cf = cf;
 		this.codcliente = codcliente;
-		
+		this.proprieta = new ArrayList<EntityUnita_abitativa>();
+		cliente.caricaUnita_abitativaDaDB();
+		caricaUnita_abitativa(cliente);
 	}
 	
 	public EntityCliente(DBCliente cliente) {
@@ -25,7 +31,8 @@ public class EntityCliente {
 		this.cognome = cliente.getCognome();
 		this.cf = cliente.getCf();
 		this.codcliente = cliente.getCodcliente();
-		
+		cliente.caricaUnita_abitativaDaDB();
+		caricaUnita_abitativa(cliente);
 	}
 	
 	public void Registrazione() {
@@ -69,6 +76,13 @@ public class EntityCliente {
 	public void setCodcliente(int codcliente) {
 		this.codcliente = codcliente;
 	}
+	public ArrayList<EntityUnita_abitativa> getproprieta() {
+		return proprieta;
+	}
+
+	public void setCodcliente(ArrayList<EntityUnita_abitativa> proprieta) {
+		this.proprieta = proprieta;
+	}
 
 	@Override
 	public String toString() {
@@ -76,5 +90,11 @@ public class EntityCliente {
 				+ "]";
 	}
 	
-	
+	public void caricaUnita_abitativa(DBCliente cliente){
+		for(int i=0;i<studenti.getUnita_abitativa().size();i++)[
+			EntityUnita_abitativa v = new EntityUnita_abitativa(cliente.getUnita_abitativa().get(i));
+			this.proprieta.add(v);
+
+		]
+	}
 }

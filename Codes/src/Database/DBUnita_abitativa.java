@@ -11,12 +11,12 @@ public class DBUnita_abitativa {
     private String nint;
     private String citta;
     private String cap;
+    private String cf;
 
-    public DBUnita_abitativa (String via,String ncivico, String nint,String citta,String cap){
+    public DBUnita_abitativa (String via,String ncivico, String nint,String cap){
         this.via = via ;
         this.ncivico = ncivico;
         this.nint = nint;
-        this.citta = citta;
         this.cap = cap;
         caricaDaDB();
     }
@@ -31,7 +31,8 @@ public class DBUnita_abitativa {
 				this.setncivico(rs.getString("ncivico"));
 				this.setnint(rs.getString("nint"));
 				this.setcitta(rs.getString("citta"));
-                this.setcap(rs.getString("cap"));
+        this.setcap(rs.getString("cap"));
+        this.setcf(rs.getString("cf"));
 			}
 		} catch (ClassNotFoundException | SQLException ex) {
            
@@ -80,6 +81,14 @@ public class DBUnita_abitativa {
     
       public void setcap(String cap) {
         this.cap = cap;
+      }
+
+      public String getcf() {
+        return cf;
+      }
+    
+      public void setcf(String cf) {
+        this.cf = cf;
       }
     
       @Override

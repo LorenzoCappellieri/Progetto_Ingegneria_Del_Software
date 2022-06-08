@@ -70,7 +70,7 @@ public void caricaUnita_abitativaDaDB() {
 	        ResultSet rs = DBConnectionManager.selectQuery(query);
 	        if(rs.next() == false && cf.length()==16)	
 	        {
-	        	System.out.println("Il codice fiscale da lei inserito non è presente nel database. Per registrarsi è necessario possedere una fornitura.");
+	        	System.out.println("Il codice fiscale da lei inserito non corrisponde a nessun nostro cliente. Per registrarsi è necessario possedere una fornitura.");
 	        	System.exit(0);
 	        }
 	        String query1 = "SELECT cf FROM newschema.cliente_registrato WHERE cf = '"+cf+"'";
@@ -165,6 +165,14 @@ public void caricaUnita_abitativaDaDB() {
 
 	public void setCodcliente(int codcliente) {
 		this.codcliente = codcliente;
+	}
+
+	public ArrayList<DBUnita_abitativa> getproprieta() {
+		return proprieta;
+	}
+
+	public void setCodcliente(ArrayList<DBUnita_abitativa> proprieta) {
+		this.proprieta = proprieta;
 	}
 
 	@Override

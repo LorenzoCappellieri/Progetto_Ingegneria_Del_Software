@@ -1,5 +1,6 @@
 package Entity;
 
+import java.util.ArrayList;
 import Database.DBCliente_registrato;
 
 public class EntityCliente_Registrato {
@@ -28,14 +29,34 @@ public EntityCliente_Registrato(String username) {
 		super();
 	}
     
-	public void InserimentoLetturaMensile() {
-		DBCliente_registrato cliente = new DBCliente_registrato();
-		cliente.InserimentoLetturaMensile();
+	public static ArrayList<String> CheckUPClienteReg(String username, String password) {
+		ArrayList<String> ret = new ArrayList<String>();
+		DBCliente_registrato cr = new DBCliente_registrato();
+		ret = cr.CheckUPClienteReg(username, password);
+		return ret;
 	}
+	
+	
+	public static int CheckFornitura(String fornitura, String cf) {
+		int ret =  0;
+		DBCliente_registrato cr = new DBCliente_registrato();
+		ret = cr.CheckFornitura(fornitura, cf);
+		return ret;
+	}
+	
+	public static int CheckLettura(String fornitura, Double lettura) {
+		int ret = 0;
+		DBCliente_registrato cr = new DBCliente_registrato();
+		ret = cr.CheckLettura(fornitura, lettura);
+		return ret;
+	}
+	
 
-	public void VisualizzaFattura() {
+	public ArrayList<String> Genera_e_VisualizzaFattura(String fornitura) {
+		ArrayList<String> ret = new ArrayList<String>();
 		DBCliente_registrato cliente = new DBCliente_registrato();
-		cliente.VisualizzaFattura();
+		ret = cliente.Genera_e_VisualizzaFattura(fornitura);
+		return ret;
 	}
 
 	public String getUsername() {
@@ -67,6 +88,5 @@ public EntityCliente_Registrato(String username) {
 		return "EntityCliente_Registrato [username=" + username + ", password=" + password + ", cf=" + cf + "]";
 	}
 	
-	
-	
 }
+

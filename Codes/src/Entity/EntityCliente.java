@@ -1,6 +1,5 @@
 package Entity;
 
-import java.sql.ClientInfoStatus;
 import java.util.ArrayList;
 
 import Database.DBCliente;
@@ -23,6 +22,7 @@ public class EntityCliente {
 		this.proprieta = new ArrayList<EntityUnita_abitativa>();
 		cliente.caricaUnita_abitativaDaDB();
 		caricaUnita_abitativa(cliente);
+		
 	}
 	
 	public EntityCliente(DBCliente cliente) {
@@ -33,13 +33,41 @@ public class EntityCliente {
 		this.codcliente = cliente.getCodcliente();
 		cliente.caricaUnita_abitativaDaDB();
 		caricaUnita_abitativa(cliente);
+		
 	}
 	
-	public void Registrazione() {
+	public static int CheckCf(String cf) {
+		int ret = 0;
 		DBCliente cliente = new DBCliente();
-		cliente.Registrazione();
+		ret = cliente.CheckCf(cf);
+		return ret;
 	}
 	
+	public static int CheckUsername(String user) {
+		int ret = 0;
+		DBCliente cliente = new DBCliente();
+		ret = cliente.CheckUsername(user);
+		return ret;
+	}
+	
+	public static int CheckPassword(String psw) {
+		int ret = 0;
+		DBCliente cliente = new DBCliente();
+		ret = cliente.CheckPassword(psw);
+		return ret;
+	}
+	
+	public static void Insert(String cf, String user, String psw) {
+		DBCliente cliente = new DBCliente();
+		cliente.Insert(cf,user,psw);
+	}
+
+	public static ArrayList<String> scaricaCliente(String cf) {
+		ArrayList<String> info = new ArrayList<String>();
+		DBCliente c = new DBCliente();
+		info = c.scaricaCliente(cf);
+		return info;
+	}
 	
 	public EntityCliente() {
 		super();
@@ -76,11 +104,14 @@ public class EntityCliente {
 	public void setCodcliente(int codcliente) {
 		this.codcliente = codcliente;
 	}
-	public ArrayList<EntityUnita_abitativa> getproprieta() {
+	
+	
+
+	public ArrayList<EntityUnita_abitativa> getProprieta() {
 		return proprieta;
 	}
 
-	public void setCodcliente(ArrayList<EntityUnita_abitativa> proprieta) {
+	public void setProprieta(ArrayList<EntityUnita_abitativa> proprieta) {
 		this.proprieta = proprieta;
 	}
 
@@ -90,11 +121,12 @@ public class EntityCliente {
 				+ "]";
 	}
 	
-	public void caricaUnita_abitativa(DBCliente cliente){
-		for(int i=0;i<studenti.getUnita_abitativa().size();i++)[
-			EntityUnita_abitativa v = new EntityUnita_abitativa(cliente.getUnita_abitativa().get(i));
+	public void caricaUnita_abitativa(DBCliente cliente) {
+		for(int i = 0;i<cliente.getProprieta().size();i++ ){
+			EntityUnita_abitativa v = new EntityUnita_abitativa(cliente.getProprieta().get(i));
 			this.proprieta.add(v);
-
-		]
+		}
 	}
+	
+	
 }

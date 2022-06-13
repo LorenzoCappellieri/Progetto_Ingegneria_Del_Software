@@ -4,7 +4,6 @@ import java.net.NetworkInterface;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -53,82 +52,117 @@ public void caricaUnita_abitativaDaDB() {
 			Ua.setcitta(rs.getString("citta"));
 			Ua.setcap(rs.getString("cap"));
 		}
+	}catch (ClassNotFoundException | SQLException ex) {
+        
+        Logger.getLogger("com.mysql.cj.jdbc.Driver").log(Level.SEVERE, null, ex);
 	}
 }
 
 
-	public void Registrazione() {
+	public int CheckCf(String cf) {
 		int x = 0 ;
 		try {
-			String cf;
-	        do{
-	        x=0;
-	        System.out.println("Inserisci il codice fiscale");
-	        Scanner tastiera3 = new Scanner(System.in);
-	        cf = tastiera3.nextLine();
+	        
 	        String query = "SELECT cf FROM newschema.cliente WHERE cf = '" +cf+ "'";
 	        ResultSet rs = DBConnectionManager.selectQuery(query);
 	        if(rs.next() == false && cf.length()==16)	
 	        {
-	        	System.out.println("Il codice fiscale da lei inserito non corrisponde a nessun nostro cliente. Per registrarsi Ã¨ necessario possedere una fornitura.");
-	        	System.exit(0);
+	        	x = 1;
 	        }
 	        String query1 = "SELECT cf FROM newschema.cliente_registrato WHERE cf = '"+cf+"'";
 	        ResultSet rs1 = DBConnectionManager.selectQuery(query1);
 	        if(rs1.next() == true && cf.length()==16)
 	        {
-	        System.out.println("Il codice fiscale inserito risulta gia Ã¨ associato ad un utente registrato.");
-	        System.exit(0);
+	        	x = -1;
 	        } 
 	        if(cf.length()!=16){
-	        System.out.println("Il codice fiscale da lei inserito non ha il corretto numero di caratteri");
-	        x++;
+	        x = -2;
 	        }
-	        }while(x!=0);
-	        
-	        String u;
-            do{
-            System.out.println("Inserisci l'Username");
-            Scanner tastiera = new Scanner(System.in);
-            u = tastiera.nextLine();
-            
-            if (u.length()>20){
-                System.out.println("Username troppo lungo.");
+	       
+		}catch(ClassNotFoundException | SQLException ex) {
+           
+            Logger.getLogger("com.mysql.cj.jdbc.Driver").log(Level.SEVERE, null, ex);
+		}
+		return x;
+	}
+	
+	public int  CheckUsername(String username) {
+			int i = 0;
+		try {
+		//do{
+            i = 0;
+            if (username.length()>20){
+            	i = 1;
+                //System.out.println("Username troppo lungo.");
             }
             
-            String query2 = "SELECT username FROM newschema.cliente_registrato WHERE username = '"+u+"'";
+            String query2 = "SELECT username FROM newschema.cliente_registrato WHERE username = '"+username+"'";
             ResultSet rs2 = DBConnectionManager.selectQuery(query2);
             if(rs2.next() == true){
-                System.out.println("L'Username Ã¨ giÃ  presente,inserirne un altro.");
-                u="xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx";
+            	i = -1;
+                //System.out.println("L'Username è già presente,inserirne un altro.");
+                //username="xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx";
             }
-            
-            }while(u.length()>20 || u.length() == 0);
-
-            String p;
-            do{
-            System.out.println("Inserisci Password");
-            Scanner tastiera2 = new Scanner(System.in);
-            p = tastiera2.nextLine();
+           
+            //}while(username.length()>20 || username.length() == 0);
+		}catch(ClassNotFoundException | SQLException ex) {
+           
+            Logger.getLogger("com.mysql.cj.jdbc.Driver").log(Level.SEVERE, null, ex);
+		}
+		return i ;
+	}
+	
+	public int CheckPassword(String password) {
+		//do{
+			
+			int i = 0;
             //tastiera2.close();
 
-            if(p.length()!=8){
-                System.out.println("La password deve essere di 8 caratteri!");
+            if(password.length()!=8){
+               i = 1;// System.out.println("La password deve essere di 8 caratteri!");
             }
             
-            }while(p.length()!=8);
-            
-            
-            String query3 = "Insert into newschema.cliente_registrato (username,password,cf) values ('"+u+"','"+p+"','"+cf+"';";
-            DBConnectionManager.updateQuery(query3);
-            System.out.println("La registrazione Ã¨ avvenuta con successo!");
-	        
-            
-		} catch(ClassNotFoundException | SQLException ex) {
+           // }while(password.length()!=8);
+		
+		return i;
+	}
+	
+	public void Insert(String cf,String u, String p) {
+		try {
+			
+		String query3 = "Insert into newschema.cliente_registrato (username,password,cf) values ('"+u+"','"+p+"','"+cf+"');";
+        DBConnectionManager.updateQuery(query3);
+       // System.out.println("La registrazione è avvenuta con successo!");
+        
+		}catch(ClassNotFoundException | SQLException ex) {
            
             Logger.getLogger("com.mysql.cj.jdbc.Driver").log(Level.SEVERE, null, ex);
 		}
 	}
+	
+	public ArrayList<String> scaricaCliente(String cf) {
+		String query = "Select * From newschema.cliente where cf= '"+cf+"';";
+		ArrayList<String> info = new ArrayList<String>();
+		
+		String n = new String();
+		String c = new String();
+		
+		try{
+			ResultSet rs = DBConnectionManager.selectQuery(query);
+			while(rs.next()){
+				n = rs.getString("nome");
+				c = rs.getString("cognome");
+				info.add(n);
+				info.add(c);	
+				
+			}
+		}catch (ClassNotFoundException | SQLException ex) {
+	        
+	        Logger.getLogger("com.mysql.cj.jdbc.Driver").log(Level.SEVERE, null, ex);
+		}
+		return info;
+	}
+
 	
 
 	public DBCliente() {
@@ -167,11 +201,12 @@ public void caricaUnita_abitativaDaDB() {
 		this.codcliente = codcliente;
 	}
 
-	public ArrayList<DBUnita_abitativa> getproprieta() {
+	
+	public ArrayList<DBUnita_abitativa> getProprieta() {
 		return proprieta;
 	}
 
-	public void setCodcliente(ArrayList<DBUnita_abitativa> proprieta) {
+	public void setProprieta(ArrayList<DBUnita_abitativa> proprieta) {
 		this.proprieta = proprieta;
 	}
 

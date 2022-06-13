@@ -1,7 +1,6 @@
 package Entity;
 
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -91,6 +90,5 @@ public class EntityUnita_abitativa {
         return "EntityIndirizzo [via=" + via + ", ncivico=" + ncivico  + ", nint=" + nint + ", citta =" + citta + ",cap=" +cap+"]";
       }
       
-      
-    
     }
+

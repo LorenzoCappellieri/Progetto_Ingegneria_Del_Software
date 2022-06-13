@@ -73,7 +73,7 @@ public class DBGestione {
 	        {
 	        	x = 1; //Riempie campi l'impiegato
 	        }
-	        if(cf.length()!=16){
+	        if(Pattern.matches("[a-zA-Z_0-9]{16}+", cf)==false){
 	        x = -2; //cf errato
 	        }
 	        
@@ -89,7 +89,7 @@ public class DBGestione {
 		
 		int c = 0;
 		
-    if(Pattern.matches("[a-zA-Z_ò_à_è_ì_ù_'_ _]+", nome)==false){                 
+    if(Pattern.matches("[a-zA-Z_ï¿½_ï¿½_ï¿½_ï¿½_ï¿½_'_ _]+", nome)==false){                 
     	c++;
     }
     return c;
@@ -99,7 +99,7 @@ public class DBGestione {
 		
 		int c = 0;
 		
-    if(Pattern.matches("[a-zA-Z_ò_à_è_ì_ù_'_ _]+", cognome)==false){                 
+    if(Pattern.matches("[a-zA-Z_ï¿½_ï¿½_ï¿½_ï¿½_ï¿½_'_ _]+", cognome)==false){                 
     	c = 2;
     }
     return c;
@@ -109,7 +109,7 @@ public class DBGestione {
 	
 	int c=0;
         
-    if(Pattern.matches("[a-zA-Z_ò_à_è_ì_'_ _]+", via)==false){                 
+    if(Pattern.matches("[a-zA-Z_ï¿½_ï¿½_ï¿½_ï¿½_'_ _]+", via)==false){                 
         c++;
         //System.out.println("La via da lei inserita non rispetta il formato richiesto");
     }
@@ -142,9 +142,9 @@ public class DBGestione {
 	
 	int c = 0;
 	
-	if(Pattern.matches("[a-zA-Z_ò_à_è_ì_ù_'_ _]+", citta)==false){                 
+	if(Pattern.matches("[a-zA-Z_ï¿½_ï¿½_ï¿½_ï¿½_ï¿½_'_ _]+", citta)==false){                 
          c++;
-        // System.out.println("La città da lei inserita non rispetta il formato richiesto");
+        // System.out.println("La cittï¿½ da lei inserita non rispetta il formato richiesto");
     }
 	return c;
 	}
@@ -250,7 +250,7 @@ public class DBGestione {
 		rsc = DBConnectionManager.selectQuery(query);
 		//media consumi annuali
 		if(rsc.next() == false){
-		//System.out.println("La città da lei inserita non è presente nel database.Inserirne una corretta.");
+		//System.out.println("La cittï¿½ da lei inserita non ï¿½ presente nel database.Inserirne una corretta.");
 		x++;
 		}
 		}catch (ClassNotFoundException | SQLException ex) {
@@ -270,7 +270,7 @@ public class DBGestione {
 			
 			if(Pattern.matches("[1_2_3]+", tipo)==false){                 
 				c++;
-				//System.out.println("Ciò che ha inserito non rispetta il formato richiesto");
+				//System.out.println("Ciï¿½ che ha inserito non rispetta il formato richiesto");
 			}
 	
 		String c2 = String.valueOf(c);
@@ -308,7 +308,7 @@ public Double GeneraRep(String citta, String tipo, String unita){
 	rsq = DBConnectionManager.selectQuery(query2);
 	if(rsq.next() == true){
 	consumi_medi = rsq.getDouble("Consumi_medi");
-	//System.out.println(" I consumi medi mensili dell'ultimo anno per unità abitativa sono " + rsq.getDouble("Consumi_medi")+" "+unita+" per la città di "+citta+" per quanto riguarda la fornitura di "+tipo);
+	//System.out.println(" I consumi medi mensili dell'ultimo anno per unitï¿½ abitativa sono " + rsq.getDouble("Consumi_medi")+" "+unita+" per la cittï¿½ di "+citta+" per quanto riguarda la fornitura di "+tipo);
 	}
 			 
 }catch (ClassNotFoundException | SQLException ex) {
@@ -329,12 +329,12 @@ public int CheckDataIn(String in) {
 		try {
 			data_inizio = new SimpleDateFormat("yyyy-mm-dd").parse(in);
 		}catch (ParseException e) {
-			//System.out.println("La data inserita non è valida");
+			//System.out.println("La data inserita non ï¿½ valida");
 			i++;
 		}
 		if(data_inizio.compareTo(today) > 0)
 		{
-			//System.out.println("La data inserita non è valida");
+			//System.out.println("La data inserita non ï¿½ valida");
 			i++;
 		}	
 		return i;
@@ -349,15 +349,15 @@ public ArrayList<String> CheckDataFin(String fin, String in){
 		ZoneId defaultZoneId = ZoneId.systemDefault();
 		Date today = Date.from(today2.atStartOfDay(defaultZoneId).toInstant());
 		int j =0;
-		//System.out.println("Inserisci la data di fine (yyyy-mm-dd) da quando vuoi sapere le analytics di questa città");
+		//System.out.println("Inserisci la data di fine (yyyy-mm-dd) da quando vuoi sapere le analytics di questa cittï¿½");
 		try {
 			data_fine = new SimpleDateFormat("yyyy-mm-dd").parse(fin);
 		}catch (ParseException e){
-			//System.out.println("La data inserita non è valida");
+			//System.out.println("La data inserita non ï¿½ valida");
 			j++;
 		}
 		if(data_fine.compareTo(today) > 0){
-			//System.out.println("La data inserita non è valida");
+			//System.out.println("La data inserita non ï¿½ valida");
 			j++;
 		}
 		
